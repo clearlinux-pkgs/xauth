@@ -6,7 +6,7 @@
 #
 Name     : xauth
 Version  : 1.0.10
-Release  : 15
+Release  : 16
 URL      : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz
 Source99 : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz.sig
@@ -15,15 +15,12 @@ Group    : Development/Tools
 License  : MIT MIT-Opengroup
 Requires: xauth-bin
 Requires: xauth-doc
-BuildRequires : cmdtest
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xau)
 BuildRequires : pkgconfig(xext)
 BuildRequires : pkgconfig(xmuu)
 BuildRequires : pkgconfig(xorg-macros)
 BuildRequires : pkgconfig(xtrans)
-BuildRequires : python-cliapp
-BuildRequires : python-ttystatus
 
 %description
 I. OVERVIEW
@@ -51,20 +48,16 @@ doc components for the xauth package.
 %setup -q -n xauth-1.0.10
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1485789580
+export SOURCE_DATE_EPOCH=1503882276
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
-%check
-export LANG=C
-export http_proxy=http://127.0.0.1:9/
-export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
-make VERBOSE=1 V=1 %{?_smp_mflags} check
-
 %install
-export SOURCE_DATE_EPOCH=1485789580
+export SOURCE_DATE_EPOCH=1503882276
 rm -rf %{buildroot}
 %make_install
 
