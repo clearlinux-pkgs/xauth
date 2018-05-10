@@ -6,7 +6,7 @@
 #
 Name     : xauth
 Version  : 1.0.10
-Release  : 17
+Release  : 18
 URL      : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz
 Source99 : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz.sig
