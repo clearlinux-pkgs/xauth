@@ -6,15 +6,16 @@
 #
 Name     : xauth
 Version  : 1.0.10
-Release  : 18
+Release  : 19
 URL      : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz
 Source99 : http://xorg.freedesktop.org/releases/individual/app/xauth-1.0.10.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT MIT-Opengroup
-Requires: xauth-bin
-Requires: xauth-doc
+Requires: xauth-bin = %{version}-%{release}
+Requires: xauth-license = %{version}-%{release}
+Requires: xauth-man = %{version}-%{release}
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xau)
 BuildRequires : pkgconfig(xext)
@@ -31,17 +32,26 @@ The underlying "Authorization Protocol for X" is described in the
 %package bin
 Summary: bin components for the xauth package.
 Group: Binaries
+Requires: xauth-license = %{version}-%{release}
 
 %description bin
 bin components for the xauth package.
 
 
-%package doc
-Summary: doc components for the xauth package.
-Group: Documentation
+%package license
+Summary: license components for the xauth package.
+Group: Default
 
-%description doc
-doc components for the xauth package.
+%description license
+license components for the xauth package.
+
+
+%package man
+Summary: man components for the xauth package.
+Group: Default
+
+%description man
+man components for the xauth package.
 
 
 %prep
@@ -52,13 +62,22 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1503882276
+export SOURCE_DATE_EPOCH=1557102574
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1503882276
+export SOURCE_DATE_EPOCH=1557102574
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/xauth
+cp COPYING %{buildroot}/usr/share/package-licenses/xauth/COPYING
 %make_install
 
 %files
@@ -68,6 +87,10 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/bin/xauth
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/xauth/COPYING
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/xauth.1
