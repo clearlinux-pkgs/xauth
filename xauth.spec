@@ -6,10 +6,10 @@
 #
 Name     : xauth
 Version  : 1.1
-Release  : 20
+Release  : 21
 URL      : http://xorg.freedesktop.org/releases/individual/app/xauth-1.1.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/app/xauth-1.1.tar.gz
-Source99 : http://xorg.freedesktop.org/releases/individual/app/xauth-1.1.tar.gz.sig
+Source1  : http://xorg.freedesktop.org/releases/individual/app/xauth-1.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT MIT-Opengroup
@@ -57,29 +57,30 @@ man components for the xauth package.
 
 %prep
 %setup -q -n xauth-1.1
+cd %{_builddir}/xauth-1.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1563052316
+export SOURCE_DATE_EPOCH=1602192642
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1563052316
+export SOURCE_DATE_EPOCH=1602192642
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xauth
-cp COPYING %{buildroot}/usr/share/package-licenses/xauth/COPYING
+cp %{_builddir}/xauth-1.1/COPYING %{buildroot}/usr/share/package-licenses/xauth/86486fb1779766ab7d69e7240a7bf54ebb86c1ba
 %make_install
 
 %files
@@ -91,7 +92,7 @@ cp COPYING %{buildroot}/usr/share/package-licenses/xauth/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/xauth/COPYING
+/usr/share/package-licenses/xauth/86486fb1779766ab7d69e7240a7bf54ebb86c1ba
 
 %files man
 %defattr(0644,root,root,0755)
